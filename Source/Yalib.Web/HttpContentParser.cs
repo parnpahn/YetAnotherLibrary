@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Hlt;
+using Yalib;
 
 /// <summary>
 /// HttpContentParser
 /// Reads an http data stream and returns the form parameters.
 /// </summary>
-namespace Hlt.Web
+namespace Yalib.Web
 {
     public class HttpContentParser
     {

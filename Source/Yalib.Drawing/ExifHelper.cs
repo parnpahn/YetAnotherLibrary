@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 
-namespace Hlt.Drawing
+namespace Yalib.Drawing
 {
     public enum ExifOrientations
     {

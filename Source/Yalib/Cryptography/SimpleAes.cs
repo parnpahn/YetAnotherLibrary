@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hlt.Cryptography
+namespace Yalib.Cryptography
 {
     public class SimpleAes
     {

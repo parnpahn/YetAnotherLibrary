@@ -5,7 +5,7 @@ using System.Text;
 using System.Management;
 using System.Net;
 
-namespace Hlt
+namespace Yalib
 {
     /// <summary>
     /// 系統資訊。

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Htl.Text
+namespace Yalib.Text
 {
     public static class Base36
     {

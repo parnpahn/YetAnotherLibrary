@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using Hlt;
+using Yalib;
 
 /// <summary>
 /// HttpMultipartParser
 /// Reads a multipart http data stream and returns the file name, content type and file content.
 /// Also, it returns any additional form parameters in a Dictionary.
 /// </summary>
-namespace Hlt.Web
+namespace Yalib.Web
 {
     public delegate void MultiPartFileHandler(string filename, string contentType, byte[] content);
 

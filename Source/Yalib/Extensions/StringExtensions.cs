@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hlt
+namespace Yalib
 {
     /// <summary>
     /// String extension methods.

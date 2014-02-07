@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Hlt.Cryptography
+namespace Yalib.Cryptography
 {
     public static class CryptoHelper
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
-namespace Hlt.Web.WebForms
+namespace Yalib.Web.WebForms
 {
 	/// <summary>
 	/// Notice: You must call these methods after 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Hlt.Text
+namespace Yalib.Text
 {
     public static class RegExpHelper
     {

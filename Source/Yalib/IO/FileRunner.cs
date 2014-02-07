@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace Hlt.IO
+namespace Yalib.IO
 {
 	/// <summary>
 	/// 此類別可用來執行檔案。

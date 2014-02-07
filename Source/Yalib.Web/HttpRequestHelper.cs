@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 
-namespace Hlt.Web
+namespace Yalib.Web
 {
     public static class HttpRequestHelper
     {

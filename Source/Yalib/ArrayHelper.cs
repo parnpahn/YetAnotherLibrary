@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Hlt
+namespace Yalib
 {
     public static class ArrayHelper
     {

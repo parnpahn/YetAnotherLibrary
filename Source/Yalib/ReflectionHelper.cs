@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.IO;
 
-namespace Hlt
+namespace Yalib
 {
     public static class ReflectionHelper
     {

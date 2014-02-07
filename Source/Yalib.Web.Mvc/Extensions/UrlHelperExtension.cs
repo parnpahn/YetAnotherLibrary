@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 
-namespace Hlt.Web.Mvc
+namespace Yalib.Web.Mvc
 {
     public static class UrlHelperExtension
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Hlt.Geodesy
+namespace Yalib.Geodesy
 {
     #region LatLon class
     /// <summary>

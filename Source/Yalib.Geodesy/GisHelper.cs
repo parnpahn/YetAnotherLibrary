@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hlt.Geodesy
+namespace Yalib.Geodesy
 {
     public static class GisHelper
     {

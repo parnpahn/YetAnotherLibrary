@@ -4,7 +4,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 
-namespace Hlt.Data.Entity
+namespace Yalib.Data.Entity
 {
     public static class EntityHelper
     {

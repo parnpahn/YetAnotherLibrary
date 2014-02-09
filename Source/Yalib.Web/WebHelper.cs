@@ -71,7 +71,7 @@ namespace Yalib.Web
 
         public static string ToAbsoluteUrl(string relativeUrl)
         {
-            if (string.IsNullOrEmpty(relativeUrl))
+            if (String.IsNullOrEmpty(relativeUrl))
                 return relativeUrl;
 
             if (HttpContext.Current == null)

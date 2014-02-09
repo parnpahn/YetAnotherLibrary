@@ -4,27 +4,29 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E61C286-B7EF-4CF0-8493-8082A6AEBDAD}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0DA0AB59-949E-453B-AE3C-603F2C8AC586}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yalib</RootNamespace>
-    <AssemblyName>Yalib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>TestSymbolPackage</RootNamespace>
+    <AssemblyName>TestSymbolPackage</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Build\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Build\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,28 +34,37 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Yalib">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.dll</HintPath>
+    </Reference>
+    <Reference Include="Yalib.Data">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Yalib.Drawing">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Yalib.Geodesy">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.Geodesy.dll</HintPath>
+    </Reference>
+    <Reference Include="Yalib.Web">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Yalib.Web.Mvc">
+      <HintPath>..\packages\Yalib.1.0.0.5\lib\net40\Yalib.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayHelper.cs" />
-    <Compile Include="ConvertHelper.cs" />
-    <Compile Include="Cryptography\CryptoHelper.cs" />
-    <Compile Include="Cryptography\SimpleAes.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="IO\FileRunner.cs" />
-    <Compile Include="KeyGenerator.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionHelper.cs" />
-    <Compile Include="StrHelper.cs" />
-    <Compile Include="SysInfo.cs" />
-    <Compile Include="Text\Base36.cs" />
-    <Compile Include="Text\RegExpHelper.cs" />
-    <Compile Include="Text\UnicodeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

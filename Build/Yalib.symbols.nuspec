@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Yalib</id>
-    <version>1.0.0.5</version>
+    <version>0.0.0</version>
     <title>Yet Another Library for .NET</title>
     <authors>Huanlin Tsai</authors>
     <owners>Huanlin Tsai</owners>
     <projectUrl>https://github.com/huanlin/YetAnotherLibrary</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Just some common utilities for .NET development.</description>
-    <copyright>Copyright© 2014 Huanlin Tsai</copyright>
+    <copyright>Copyright© 2014</copyright>
     <dependencies>
       <group targetFramework="net40"> 
       </group>     

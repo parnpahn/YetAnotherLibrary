@@ -14,7 +14,8 @@ namespace Yalib
 		/// </summary>
 		/// <param name="input">輸入字串。</param>
 		/// <returns>輸出字串。</returns>
-		public static string AppendSlash(string input)
+        [Obsolete("Use EnsureEndWith() or EnsureEndWithEnsureEndWithDirectorySeparator() instead.")]
+        public static string AppendSlash(string input)
 		{
 			if (input == null)
 				return @"\";
@@ -233,6 +234,7 @@ namespace Yalib
 		/// </summary>
 		/// <param name="str"></param>
 		/// <returns></returns>
+        [Obsolete("Use StringToBytes() instead.")]
 		public static byte[] ToByteArray(string str)
 		{
 			return Encoding.Default.GetBytes(str);
@@ -244,15 +246,29 @@ namespace Yalib
 		/// <param name="str">輸入字串。</param>
 		/// <param name="enc">編碼。</param>
 		/// <returns></returns>
-		public static byte[] ToByteArray(string str, Encoding enc)
+		[Obsolete("Use StringToBytes() instead.")]
+        public static byte[] ToByteArray(string str, Encoding enc)
 		{
-			return enc.GetBytes(str);
+            return StringToBytes(str, enc);
 		}
 
-		[Obsolete("此函式已經過時，請改用 Parse")]
-		public static string ByteArrayToStr(byte[] bytes)
+        public static byte[] StringToBytes(string str, Encoding enc = null)
+        {
+            if (enc == null)
+            {
+                enc = Encoding.UTF8;
+            }
+            return enc.GetBytes(str);
+        }
+
+
+		public static string BytesToString(byte[] bytes, Encoding enc = null)
 		{
-			return Parse(bytes);
+            if (enc == null)
+            {
+                enc = new System.Text.UTF8Encoding();
+            }            
+            return enc.GetString(bytes);
 		}
 
 		/// <summary>
@@ -262,8 +278,7 @@ namespace Yalib
 		/// <returns></returns>
 		public static string Parse(byte[] bytes)
 		{
-			System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-			return enc.GetString(bytes);
+			return BytesToString(bytes);
 		}
 
 		/// <summary>
@@ -494,16 +509,16 @@ namespace Yalib
 		/// <summary>
 		/// 將傳入的字串拆解成 key-value pairs。
 		/// </summary>
-		/// <param name="s">輸入字串，常見的格式為 "key1=value1;key2=value2;..."。</param>
+		/// <param name="input">輸入字串，常見的格式為 "key1=value1;key2=value2;..."。</param>
 		/// <param name="itemSeparator">用來分隔每個 key-value 項目的字元。</param>
 		/// <param name="keyValueSeparator">用來分隔 key 和 value 的字元。</param>
 		/// <returns>Key-value pair 串列。</returns>
-		public static List<KeyValuePair<string, string>> SplitKeyValuePairs(string s,
+		public static List<KeyValuePair<string, string>> SplitKeyValuePairs(string input,
 			char itemSeparator, char keyValueSeparator)
 		{
 			List<KeyValuePair<string, string>> keyValues = new List<KeyValuePair<string, string>>();
 
-			string[] items = s.Split(new char[] { itemSeparator }, StringSplitOptions.RemoveEmptyEntries);
+			string[] items = input.Split(new char[] { itemSeparator }, StringSplitOptions.RemoveEmptyEntries);
 			string[] keyValue;
 			KeyValuePair<string, string> pair;
 
@@ -557,20 +572,32 @@ namespace Yalib
 			return tokens;
 		}
 
-		public static string EnsureEndWith(string s, string value)
+		public static string EnsureEndWith(string input, string endingStr)
 		{
-			if (value == null)
-				throw new ArgumentNullException("value");
-			if (value.EndsWith(s))
+			if (endingStr == null)
+                throw new ArgumentNullException("endingStr");
+            if (input.EndsWith(endingStr))
 			{
-				return value;
+                return input;
 			}
-			return value + s;
+            return input + endingStr;
 		}
 
-		public static string EnsureEndWithDirectorySeparator(this string value)
+        public static string EnsureNotEndWith(string input, string endingStr)
+        {
+            if (endingStr == null)
+                throw new ArgumentNullException("endingStr");
+            if (endingStr.EndsWith(input))
+            {
+                int idx = input.LastIndexOf(endingStr);
+                return input.Remove(idx);
+            }
+            return input;
+        }
+
+		public static string EnsureEndWithDirectorySeparator(string input)
 		{
-			return value.EnsureEndWith(System.IO.Path.DirectorySeparatorChar.ToString());
+			return EnsureEndWith(input, System.IO.Path.DirectorySeparatorChar.ToString());
 		}
 
 	}

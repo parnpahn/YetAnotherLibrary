@@ -12,16 +12,16 @@ namespace Yalib
         /// <summary>
         /// Reverses a string.
         /// </summary>
-        /// <param name = "value">The string to be reversed.</param>
+        /// <param name = "input">The string to be reversed.</param>
         /// <returns>The reversed string</returns>
-        public static string Reverse(this string value)
+        public static string Reverse(this string input)
         {
-            if (String.IsNullOrEmpty(value) || (value.Length == 1))
+            if (String.IsNullOrWhiteSpace(input) || (input.Length == 1))
             {
-                return value;
+                return input;
             }
 
-            var chars = value.ToCharArray();
+            var chars = input.ToCharArray();
             Array.Reverse(chars);
             return new string(chars);
         }
@@ -29,47 +29,47 @@ namespace Yalib
         /// <summary>
         /// Returns the left part of the string.
         /// </summary>
-        /// <param name="value">The original string.</param>
+        /// <param name="input">The original string.</param>
         /// <param name="characterCount">The character count to be returned.</param>
         /// <returns>The left part</returns>
-        public static string Left(this string value, int characterCount)
+        public static string Left(this string input, int characterCount)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
-            if (characterCount >= value.Length)
+            if (input == null)
+                throw new ArgumentNullException("input");
+            if (characterCount >= input.Length)
                 throw new ArgumentOutOfRangeException("characterCount", characterCount, "characterCount must be less than length of string");
-            return value.Substring(0, characterCount);
+            return input.Substring(0, characterCount);
         }
 
         /// <summary>
         /// Returns the Right part of the string.
         /// </summary>
-        /// <param name="value">The original string.</param>
+        /// <param name="input">The original string.</param>
         /// <param name="characterCount">The character count to be returned.</param>
         /// <returns>The right part</returns>
-        public static string Right(this string value, int characterCount)
+        public static string Right(this string input, int characterCount)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
-            if (characterCount >= value.Length)
+            if (input == null)
+                throw new ArgumentNullException("input");
+            if (characterCount >= input.Length)
                 throw new ArgumentOutOfRangeException("characterCount", characterCount, "characterCount must be less than length of string");
-            return value.Substring(value.Length - characterCount);
+            return input.Substring(input.Length - characterCount);
         }
 
-        public static string EnsureEndWith(this string value, string s)
+        public static string EnsureEndWith(this string input, string endingStr)
         {
-            if (value == null)
-                throw new ArgumentNullException("value");
-            if (value.EndsWith(s))
+            if (endingStr == null)
+                throw new ArgumentNullException("endingStr");
+            if (input.EndsWith(endingStr))
             {
-                return value;
+                return input;
             }
-            return value + s;
+            return input + endingStr;
         }
 
-        public static string EnsureEndWithDirectorySeparator(this string value)
+        public static string EnsureEndWithDirectorySeparator(this string input)
         {
-            return value.EnsureEndWith(System.IO.Path.DirectorySeparatorChar.ToString());
+            return input.EnsureEndWith(System.IO.Path.DirectorySeparatorChar.ToString());
         }
 
         #region To X conversions
@@ -78,35 +78,35 @@ namespace Yalib
         /// Parses a string into an Enum
         /// </summary>
         /// <typeparam name="T">The type of the Enum</typeparam>
-        /// <param name="value">String value to parse</param>
+        /// <param name="input">String value to parse</param>
         /// <param name="ignorecase">Ignore the case of the string being parsed</param>
         /// <returns>The Enum corresponding to the stringExtensions</returns>
-        public static T ToEnum<T>(this string value, bool ignorecase)
+        public static T ToEnum<T>(this string input, bool ignorecase)
         {
-            if (value == null)
+            if (input == null)
                 throw new ArgumentNullException("Value");
 
-            value = value.Trim();
+            input = input.Trim();
 
-            if (value.Length == 0)
+            if (input.Length == 0)
                 throw new ArgumentNullException("Must specify valid information for parsing in the string.", "value");
 
             Type t = typeof(T);
             if (!t.IsEnum)
                 throw new ArgumentException("Type provided must be an Enum.", "T");
 
-            return (T)Enum.Parse(t, value, ignorecase);
+            return (T)Enum.Parse(t, input, ignorecase);
         }
 
         /// <summary>
         /// Toes the integer.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="input">The value.</param>
         /// <param name="defaultvalue">The defaultvalue.</param>
         /// <returns></returns>
-        public static int ToInteger(this string value, int defaultvalue)
+        public static int ToInteger(this string input, int defaultvalue)
         {
-            return (int)ToDouble(value, defaultvalue);
+            return (int)ToDouble(input, defaultvalue);
         }
 
         /// <summary>
@@ -122,13 +122,13 @@ namespace Yalib
         /// <summary>
         /// Toes the double.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="input">The value.</param>
         /// <param name="defaultvalue">The defaultvalue.</param>
         /// <returns></returns>
-        public static double ToDouble(this string value, double defaultvalue)
+        public static double ToDouble(this string input, double defaultvalue)
         {
             double result;
-            if (double.TryParse(value, out result))
+            if (double.TryParse(input, out result))
             {
                 return result;
             }
@@ -138,23 +138,23 @@ namespace Yalib
         /// <summary>
         /// Toes the double.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="input">The value.</param>
         /// <returns></returns>
-        public static double ToDouble(this string value)
+        public static double ToDouble(this string input)
         {
-            return ToDouble(value, 0);
+            return ToDouble(input, 0);
         }
 
         /// <summary>
         /// Toes the date time.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="input">The value.</param>
         /// <param name="defaultvalue">The defaultvalue.</param>
         /// <returns></returns>
-        public static DateTime? ToDateTime(this string value, DateTime? defaultvalue)
+        public static DateTime? ToDateTime(this string input, DateTime? defaultvalue)
         {
             DateTime result;
-            if (DateTime.TryParse(value, out result))
+            if (DateTime.TryParse(input, out result))
             {
                 return result;
             }
@@ -164,30 +164,30 @@ namespace Yalib
         /// <summary>
         /// Toes the date time.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="input">The value.</param>
         /// <returns></returns>
-        public static DateTime? ToDateTime(this string value)
+        public static DateTime? ToDateTime(this string input)
         {
-            return ToDateTime(value, null);
+            return ToDateTime(input, null);
         }
 
         /// <summary>
         /// Converts a string value to bool value, supports "T" and "F" conversions.
         /// </summary>
-        /// <param name="value">The string value.</param>
+        /// <param name="input">The string value.</param>
         /// <returns>A bool based on the string value</returns>
-        public static bool? ToBoolean(this string value)
+        public static bool? ToBoolean(this string input)
         {
-            if (string.Compare("T", value, true) == 0)
+            if (string.Compare("T", input, true) == 0)
             {
                 return true;
             }
-            if (string.Compare("F", value, true) == 0)
+            if (string.Compare("F", input, true) == 0)
             {
                 return false;
             }
             bool result;
-            if (bool.TryParse(value, out result))
+            if (bool.TryParse(input, out result))
             {
                 return result;
             }

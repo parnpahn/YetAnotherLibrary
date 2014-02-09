@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yalib.Web", "Yalib.Web\Yali
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yalib.Web.Mvc", "Yalib.Web.Mvc\Yalib.Web.Mvc.csproj", "{EC203AB1-32B4-47BD-953B-2B4DC3FB958B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Yalib", "Test.Yalib\Test.Yalib.csproj", "{92A758D4-B875-4971-87AB-B51F582A617F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{EC203AB1-32B4-47BD-953B-2B4DC3FB958B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC203AB1-32B4-47BD-953B-2B4DC3FB958B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC203AB1-32B4-47BD-953B-2B4DC3FB958B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A758D4-B875-4971-87AB-B51F582A617F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A758D4-B875-4971-87AB-B51F582A617F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A758D4-B875-4971-87AB-B51F582A617F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A758D4-B875-4971-87AB-B51F582A617F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

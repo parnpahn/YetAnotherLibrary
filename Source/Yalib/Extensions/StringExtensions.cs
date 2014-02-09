@@ -223,5 +223,11 @@ namespace Yalib
         }
 
         #endregion Validation methods
+
+        public static string Ellipsis(this string input, int maxCharacters, string ellipsisText = null)
+        {
+            return StrHelper.Ellipsis(input, maxCharacters, ellipsisText);
+        }
+
     }
 }

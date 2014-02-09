@@ -539,6 +539,41 @@ namespace Yalib
 			return keyValues;
 		}
 
+        /// <summary>
+        /// 將傳入的字串拆解成 key-value pairs。
+        /// </summary>
+        /// <param name="input">輸入字串，常見的格式為 "key1=value1;key2=value2;..."。</param>
+        /// <param name="itemSeparator">用來分隔每個 key-value 項目的字元。</param>
+        /// <param name="keyValueSeparator">用來分隔 key 和 value 的字元。</param>
+        /// <returns>Key-value pair 串列。</returns>
+        public static Dictionary<string, string> SplitToDictionary(string input, char itemSeparator, char keyValueSeparator)
+        {
+            var keyValues = new Dictionary<string, string>();
+
+            string[] items = input.Split(new char[] { itemSeparator }, StringSplitOptions.RemoveEmptyEntries);
+            string[] keyValue;
+
+            foreach (string item in items)
+            {
+                keyValue = item.Split(keyValueSeparator);
+                if (keyValue.Length >= 2)
+                {
+                    keyValues.Add(keyValue[0], keyValue[1]);
+                }
+                else if (keyValue.Length >= 1)  // 只有 key 值？
+                {
+                    keyValues.Add(keyValue[0], String.Empty);
+                }
+            }
+            return keyValues;
+        }
+
+        [Obsolete("Use SplitToDictionary() instead.")]
+        public static Dictionary<string, string> ParseKeyValuePairs(string input, char itemSeparator, char keyValueSeparator='=')
+        {
+            return SplitToDictionary(input, itemSeparator, keyValueSeparator);
+        }
+
 		/// <summary>
 		/// 從指定的 XML 字串中取出特定元素。 
 		/// </summary>
@@ -576,6 +611,12 @@ namespace Yalib
 		{
 			if (endingStr == null)
                 throw new ArgumentNullException("endingStr");
+
+            if (String.IsNullOrEmpty(input))
+            {
+                return endingStr;
+            }           
+            
             if (input.EndsWith(endingStr))
 			{
                 return input;
@@ -585,9 +626,10 @@ namespace Yalib
 
         public static string EnsureNotEndWith(string input, string endingStr)
         {
-            if (endingStr == null)
-                throw new ArgumentNullException("endingStr");
-            if (endingStr.EndsWith(input))
+            if (input == null || endingStr == null)
+                throw new ArgumentNullException("input or endingStr");
+
+            if (input.EndsWith(endingStr))
             {
                 int idx = input.LastIndexOf(endingStr);
                 return input.Remove(idx);
@@ -600,6 +642,20 @@ namespace Yalib
 			return EnsureEndWith(input, System.IO.Path.DirectorySeparatorChar.ToString());
 		}
 
+        public static string Ellipsis(string input, int maxCharacters, string ellipsisText = null)
+        {
+            const string defaultEllipsis = "...";
+
+            if (input == null || input.Length < maxCharacters)
+            {
+                return input;
+            }
+            if (String.IsNullOrEmpty(ellipsisText))
+            {
+                ellipsisText = defaultEllipsis;
+            }
+            return input.Substring(0, maxCharacters) + ellipsisText;
+        }
 	}
 
 }

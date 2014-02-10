@@ -44,7 +44,7 @@
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="Cryptography\CryptoHelper.cs" />
     <Compile Include="Cryptography\SimpleAes.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="IO\FileRunner.cs" />
     <Compile Include="KeyGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

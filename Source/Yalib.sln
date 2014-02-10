@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yalib.Web.Mvc", "Yalib.Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Yalib", "Test.Yalib\Test.Yalib.csproj", "{92A758D4-B875-4971-87AB-B51F582A617F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Yalib.Web", "Test.Yalib.Web\Test.Yalib.Web.csproj", "{CF905BB1-FAC5-432C-A318-86BFC711290C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{92A758D4-B875-4971-87AB-B51F582A617F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92A758D4-B875-4971-87AB-B51F582A617F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92A758D4-B875-4971-87AB-B51F582A617F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF905BB1-FAC5-432C-A318-86BFC711290C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF905BB1-FAC5-432C-A318-86BFC711290C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF905BB1-FAC5-432C-A318-86BFC711290C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF905BB1-FAC5-432C-A318-86BFC711290C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

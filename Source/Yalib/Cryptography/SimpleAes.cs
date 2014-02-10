@@ -33,16 +33,6 @@ namespace Yalib.Cryptography
             return encoder.GetString(Decrypt(Convert.FromBase64String(encrypted)));
         }
 
-        //public string EncryptToUrl(string unencrypted)
-        //{
-        //    return HttpUtility.UrlEncode(Encrypt(unencrypted));
-        //}
-
-        //public string DecryptFromUrl(string encrypted)
-        //{
-        //    return Decrypt(HttpUtility.UrlDecode(encrypted));
-        //}
-
         public byte[] Encrypt(byte[] buffer)
         {
             return Transform(buffer, encryptor);

@@ -229,5 +229,24 @@ namespace Yalib
             return StrHelper.Ellipsis(input, maxCharacters, ellipsisText);
         }
 
+        /// <summary>
+        /// This method is suited for encoding query string of a URL, but not for the entire URL. It uses Uri.EscapeDataString() to encode the input string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string UrlEncodeQueryString(this string queryString)
+        {
+            return Uri.EscapeDataString(queryString);
+        }
+
+        /// <summary>
+        /// This method is suited for decoding query string of a URL, but not for the entire URL. It uses Uri.UnescapeDataString() to decode the input string.
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        public static string UrlDecodeQueryString(this string queryString)
+        {
+            return Uri.UnescapeDataString(queryString);
+        }
     }
 }

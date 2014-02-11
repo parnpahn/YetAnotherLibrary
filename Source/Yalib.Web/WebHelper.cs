@@ -10,6 +10,69 @@ namespace Yalib.Web
 {
     public static class WebHelper
     {
+        /// <summary>
+        /// Note: For Web Forms only!
+        /// </summary>
+        public static string GetRootUrl()
+        {
+            if (HttpContext.Current == null)
+            {
+                throw new Exception("Calling WebHelper.GetRootUrl() but HttpContext.Current is NULL!");
+            }
+            //return RelativeToAbsoluteUrl("~/");
+            string rootUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
+            if (!rootUrl.EndsWith("/"))
+            {
+                rootUrl += "/";
+            }
+            return rootUrl;
+        }
+
+        /// <summary>
+        /// Note: For Web Forms only!
+        /// </summary>
+        /// <param name="relativeUrl"></param>
+        /// <returns></returns>
+        public static string RelativeToAbsoluteUrl(string relativeUrl)
+        {
+            if (HttpContext.Current == null)
+            {
+                throw new Exception("Calling WebHelper.RelativeToAbsoluteUrl() but HttpContext.Current is NULL!");
+            }
+            var page = HttpContext.Current.CurrentHandler as System.Web.UI.Page;
+            if (page != null)
+            {
+                return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + page.ResolveUrl(relativeUrl);
+            }
+            return relativeUrl;
+        }
+
+        public static string RelativeToAbsoluteUrlSafe(string relativeUrl)
+        {
+            if (String.IsNullOrEmpty(relativeUrl))
+                return relativeUrl;
+
+            if (HttpContext.Current == null)
+                return relativeUrl;
+
+            if (relativeUrl.StartsWith("/"))
+                relativeUrl = relativeUrl.Insert(0, "~");
+            if (!relativeUrl.StartsWith("~/"))
+                relativeUrl = relativeUrl.Insert(0, "~/");
+
+            var url = HttpContext.Current.Request.Url;
+            var port = url.Port != 80 ? (":" + url.Port) : String.Empty;
+
+            return string.Format("{0}://{1}{2}{3}", url.Scheme, url.Host, port, VirtualPathUtility.ToAbsolute(relativeUrl));
+        }
+
+        [Obsolete("Use RelativeToAbsoluteUrl() or RelativeToAbsoluteUrlSafe() instead.")]
+        public static string ToAbsoluteUrl(string relativeUrl)
+        {
+            return RelativeToAbsoluteUrlSafe(relativeUrl);
+        }
+
+
         public static string GetIPv4Address()
         {
             string ipv4Address = String.Empty;
@@ -67,25 +130,6 @@ namespace Yalib.Web
                 }
             }
             return szIP;
-        }
-
-        public static string ToAbsoluteUrl(string relativeUrl)
-        {
-            if (String.IsNullOrEmpty(relativeUrl))
-                return relativeUrl;
-
-            if (HttpContext.Current == null)
-                return relativeUrl;
-
-            if (relativeUrl.StartsWith("/"))
-                relativeUrl = relativeUrl.Insert(0, "~");
-            if (!relativeUrl.StartsWith("~/"))
-                relativeUrl = relativeUrl.Insert(0, "~/");
-
-            var url = HttpContext.Current.Request.Url;
-            var port = url.Port != 80 ? (":" + url.Port) : String.Empty;
-
-            return string.Format("{0}://{1}{2}{3}", url.Scheme, url.Host, port, VirtualPathUtility.ToAbsolute(relativeUrl));
         }
 
         /// <summary>

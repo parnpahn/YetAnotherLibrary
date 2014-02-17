@@ -9,6 +9,28 @@ namespace Yalib
 {
     public static class StrHelper
     {
+        private static HashSet<string> _falseStrings; // For method ToBoolean().
+
+        static StrHelper()
+        {
+            _falseStrings = new HashSet<string>() {
+                "False", "N", "0", "NO", "Off", "Disabled"
+            };
+        }
+
+        public static String FalseStrings
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                foreach (string s in _falseStrings)
+                {
+                    sb.AppendFormat("{0};", s);
+                }
+                return sb.ToString().TrimEnd(';');
+            }
+        }
+
         /// <summary>
         /// Append a slash character '\' to string.
         /// </summary>
@@ -178,12 +200,12 @@ namespace Yalib
         public static bool CheckIdno(string idno)
         {
             int[] letter_weight = 
-			{
-				// A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R
-				10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25,
-				26, 27, 28, 29, 32, 30, 31, 33
-				// S   T   U   V   W   X   Y   Z
-			};
+            {
+                // A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R
+                10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21, 22, 35, 23, 24, 25,
+                26, 27, 28, 29, 32, 30, 31, 33
+                // S   T   U   V   W   X   Y   Z
+            };
 
             int i;
             int[] D = new int[9];	 // 1..9
@@ -280,6 +302,39 @@ namespace Yalib
         public static string Parse(byte[] bytes)
         {
             return BytesToString(bytes);
+        }
+
+        /// <summary>
+        /// Convert a String to Boolean. 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>Returns true if input string is defined in the static property 'FalseStrings.'</returns>
+        public static Boolean ToBoolean(string input)
+        {
+            return ToBoolean(input, _falseStrings);
+        }
+
+        /// <summary>
+        /// Convert a String to Boolean. 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>Returns true if input string is defined in the static property 'FalseStrings.'</returns>
+        public static Boolean ToBoolean(string input, HashSet<string> falseStrings)
+        {
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+            if (falseStrings == null)
+            {
+                throw new ArgumentException("Argument 'falseStrings' is NULL!");
+            }
+
+            if (falseStrings.Contains(input, StringComparer.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

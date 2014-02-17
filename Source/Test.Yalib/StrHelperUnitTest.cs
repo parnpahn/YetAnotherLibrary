@@ -7,6 +7,8 @@ namespace Test.Yalib
     [TestClass]
     public class StrHelperUnitTest
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void TestUrlEncode()
         {
@@ -28,6 +30,19 @@ namespace Test.Yalib
             encoded = StrHelper.UrlEncode(StrHelper.UrlEncode(input));
             decoded = StrHelper.UrlDecode(StrHelper.UrlDecode(encoded));
             Assert.AreEqual(decoded, input);
+        }
+
+        [TestMethod]
+        public void TestConversion()
+        {
+            TestContext.WriteLine("StrHelper.TrueStrings = {0}", StrHelper.TrueStrings);
+            Assert.AreEqual(StrHelper.ToBoolean("y"), true);
+            Assert.AreEqual(StrHelper.ToBoolean("Yes"), true);
+            Assert.AreEqual(StrHelper.ToBoolean("true"), true);
+            Assert.AreEqual(StrHelper.ToBoolean("1"), true);
+            Assert.AreEqual(StrHelper.ToBoolean("enabled"), true);
+            Assert.AreEqual(StrHelper.ToBoolean("N"), false);
+            Assert.AreEqual(StrHelper.ToBoolean("qoo"), false);
         }
     }
 }

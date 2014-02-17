@@ -9,21 +9,21 @@ namespace Yalib
 {
     public static class StrHelper
     {
-        private static HashSet<string> _falseStrings; // For method ToBoolean().
+        private static HashSet<string> _trueStrings; // For method ToBoolean().
 
         static StrHelper()
         {
-            _falseStrings = new HashSet<string>() {
-                "False", "N", "0", "NO", "Off", "Disabled"
+            _trueStrings = new HashSet<string>() {
+                "True", "Y", "1", "Yes", "On", "Enabled"
             };
         }
 
-        public static String FalseStrings
+        public static String TrueStrings
         {
             get
             {
                 var sb = new StringBuilder();
-                foreach (string s in _falseStrings)
+                foreach (string s in _trueStrings)
                 {
                     sb.AppendFormat("{0};", s);
                 }
@@ -308,33 +308,33 @@ namespace Yalib
         /// Convert a String to Boolean. 
         /// </summary>
         /// <param name="input"></param>
-        /// <returns>Returns true if input string is defined in the static property 'FalseStrings.'</returns>
+        /// <returns>Returns true if input string is null, empty, or exists in the static property 'TrueStrings.'</returns>
         public static Boolean ToBoolean(string input)
         {
-            return ToBoolean(input, _falseStrings);
+            return ToBoolean(input, _trueStrings);
         }
 
         /// <summary>
         /// Convert a String to Boolean. 
         /// </summary>
         /// <param name="input"></param>
-        /// <returns>Returns true if input string is defined in the static property 'FalseStrings.'</returns>
-        public static Boolean ToBoolean(string input, HashSet<string> falseStrings)
+        /// <returns>Returns true if input string is null, empty, or exists in argument 'trueStrings.'</returns>
+        public static Boolean ToBoolean(string input, HashSet<string> trueStrings)
         {
             if (String.IsNullOrWhiteSpace(input))
             {
                 return false;
             }
-            if (falseStrings == null)
+            if (trueStrings == null)
             {
-                throw new ArgumentException("Argument 'falseStrings' is NULL!");
+                throw new ArgumentException("Argument 'trueStrings' is NULL!");
             }
 
-            if (falseStrings.Contains(input, StringComparer.OrdinalIgnoreCase))
+            if (trueStrings.Contains(input, StringComparer.OrdinalIgnoreCase))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>

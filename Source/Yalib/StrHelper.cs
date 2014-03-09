@@ -726,10 +726,21 @@ namespace Yalib
         /// <returns></returns>
         public static string UrlEncode(string input)
         {
-            var aUri = new Uri(input, true);  // 'true' means don't encode it, or else the space characters will be double encoded!
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+            string uriNoQueryString = input;
+            string queryString = String.Empty;
+            int queryStringIndex = input.IndexOf('?');
+            if (queryStringIndex >= 0)
+            {
+                queryString = input.Substring(queryStringIndex).TrimStart('?');
+                uriNoQueryString = input.Remove(queryStringIndex);
+            }
 
             // Parse query string to a name-value collection. The first '?' is removed and remained '?' characters will be encoded.
-            var queryParams = SplitToKeyValuePairs(aUri.Query.TrimStart('?'), '&', '=');  // Do NOT use HttpUtility.ParseQueryString(aUri.Query) because it does encode.
+            var queryParams = SplitToKeyValuePairs(queryString, '&', '=');  // Do NOT use HttpUtility.ParseQueryString(aUri.Query) because it does encode.
 
             // Rebuilding and encoding query string.
             var sb = new StringBuilder();
@@ -738,7 +749,8 @@ namespace Yalib
                 sb.AppendFormat("{0}={1}&", Uri.EscapeDataString(item.Key), Uri.EscapeDataString(item.Value));
             }
             sb.Remove(sb.Length - 1, 1);  // Remove last '&'
-            string result = String.Format("{0}?{1}", Uri.EscapeUriString(aUri.GetLeftPart(UriPartial.Path)), sb.ToString());
+            string encodedUriPath = Uri.EscapeUriString(uriNoQueryString);
+            string result = String.Format("{0}?{1}", encodedUriPath, sb.ToString());
             return result;
         }
 
@@ -756,6 +768,131 @@ namespace Yalib
             // Since Uri.UnescapeDataString() does not decode plus sign ('+') to space character, we do it manually. 
             // Yes, System.Web.HttpUtility.UrlDecode() can do this, I just don't want to involve System.Web.dll here.
             return Uri.UnescapeDataString(input.Replace('+', ' '));
+        }
+
+        /// <summary>
+        /// Extract text in paired brackets. Supports nested brackets and escaped bracket characters. <br />
+        /// Two consecutive brackets means an escaped character.
+        /// Example: <br/>
+        /// "1{aa}2{bb}3" returns a list containing "aa" and "bb".
+        /// "{aa{bb}cc}" returns a list containing "bb" and "aa{bb}cc".
+        /// "{test \{nested\} bracket}" returns a list containing "test {nested} bracket" when argument nestedBrackets = True.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="leftBracket">Left bracket character.</param>
+        /// <param name="rightBracket">Right brackey character.</param>
+        /// <param name="keepBrackets">False means don't include bracket characters in the result text.</param>
+        /// <param name="nestedBrackets">False means treat nested brackets as literal characters. True means also extract nested brackets.</param>
+        /// <returns></returns>
+        public static List<string> ExtractTextInBrackets(string input, char leftBracket = '{', char rightBracket = '}', 
+            bool keepBrackets = false, bool nestedBrackets = false)
+        {
+            Stack<int> openingBraces = new Stack<int>();
+            var result = new List<string>();
+
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                return result;
+            }
+
+            string leftBracketStr = leftBracket.ToString();
+            string rightBracketStr = rightBracket.ToString();
+            string escapedLeftBracket = new String(leftBracket, 2);
+            string escapedRightBracket = new String(rightBracket, 2);
+
+            char lastChar = '\0';
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currChar = input[i];
+                char nextChar = '\0';
+                if ((i + 1) < input.Length)
+                {
+                    nextChar = input[i + 1];
+                }
+
+                if (currChar == leftBracket && lastChar != leftBracket && nextChar != leftBracket)
+                {
+                    openingBraces.Push(i);
+                }
+                else if (currChar == rightBracket && lastChar != rightBracket && nextChar != rightBracket)
+                {
+                    if (openingBraces.Count > 0)
+                    {
+                        int beginIndex = openingBraces.Pop();
+                        int endIndex = i;
+                        if (!keepBrackets)
+                        {
+                            beginIndex++;
+                            endIndex--;
+                        }
+                        // After Pop() is called, if there are items left in stack, then we have nested brackets. 
+                        if (nestedBrackets || openingBraces.Count < 1)
+                        {
+                            string item = input.Substring(beginIndex, endIndex - beginIndex + 1)
+                                .Replace(escapedLeftBracket, leftBracketStr)
+                                .Replace(escapedRightBracket, rightBracketStr);
+                            result.Add(item);
+                        }
+                    }
+                }
+                lastChar = currChar;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// This method finds paired brackets and returns a list containting begin and end index of each bracket. 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="leftBracket"></param>
+        /// <param name="rightBracket"></param>
+        /// <param name="nestedBrackets">False means treat nested brackets as literal characters. True means also extract nested brackets.</param>
+        /// <returns>A list containting begin and end index of each bracket</returns>
+        public static List<Tuple<int, int>> FindBracketPairs(string input, char leftBracket, char rightBracket, bool nestedBrackets = false)
+        {
+            Stack<int> openingBraces = new Stack<int>();
+            var result = new List<Tuple<int, int>>();
+
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                return result;
+            }
+
+            string leftBracketStr = leftBracket.ToString();
+            string rightBracketStr = rightBracket.ToString();
+            string escapedLeftBracket = new String(leftBracket, 2);
+            string escapedRightBracket = new String(rightBracket, 2);
+
+            char lastChar = '\0';
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currChar = input[i];
+                char nextChar = '\0';
+                if ((i + 1) < input.Length)
+                {
+                    nextChar = input[i + 1];
+                }
+
+                if (currChar == leftBracket && lastChar != leftBracket && nextChar != leftBracket)
+                {
+                    openingBraces.Push(i);
+                }
+                else if (currChar == rightBracket && lastChar != rightBracket && nextChar != rightBracket)
+                {
+                    if (openingBraces.Count > 0)
+                    {
+                        int beginIndex = openingBraces.Pop();
+                        int endIndex = i;
+                        // After Pop() is called, if there are items left in stack, then we have nested brackets. 
+                        if (nestedBrackets || openingBraces.Count < 1)
+                        {
+                            result.Add(new Tuple<int, int>(beginIndex, endIndex));
+                        }
+                    }
+                }
+                lastChar = currChar;
+            }
+            return result;
         }
     }
 
